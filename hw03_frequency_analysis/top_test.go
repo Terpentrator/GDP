@@ -7,8 +7,9 @@ import (
 )
 
 // Change to true if needed.
-var taskWithAsteriskIsCompleted = false
+var taskWithAsteriskIsCompleted = true
 
+// Тестовая последовтальность №1.
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
 	другом   Кристофером   Робином,   головой   вниз,  пересчитывая
 	ступеньки собственным затылком:  бум-бум-бум.  Другого  способа
@@ -43,6 +44,7 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+// Фцнкция тесторования №1.
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
@@ -77,6 +79,62 @@ func TestTop10(t *testing.T) {
 				"то",        // 4
 			}
 			require.Equal(t, expected, Top10(text))
+		}
+	})
+}
+
+// Тестовая последовтальность №2.
+var text2 = `! cat and dog, dog  Dog one Bob, two  ,, !...   `
+
+// Фцнкция тесторования №2.
+func TestTop10_2(t *testing.T) {
+	t.Run("no words in empty string", func(t *testing.T) {
+		require.Len(t, Top10(""), 0)
+	})
+
+	t.Run("positive test", func(t *testing.T) {
+		if taskWithAsteriskIsCompleted {
+			expected := []string{
+				"dog", // 3
+				"and", // 1
+				"bob", // 1
+				"cat", // 1
+				"one", // 1
+				"two", // 1
+				"",
+				"",
+				"",
+				"",
+			}
+			require.Equal(t, expected, Top10(text2))
+		}
+	})
+}
+
+// Тестовая последовтальность №3.
+var text3 = `  and and AND Dog, dog! 'DOG' ... Girl girls - boy Boys and not animals, Bob-one, snike ----- tree`
+
+// Фцнкция тесторования №3.
+func TestTop10_3(t *testing.T) {
+	t.Run("no words in empty string", func(t *testing.T) {
+		require.Len(t, Top10(""), 0)
+	})
+
+	t.Run("positive test", func(t *testing.T) {
+		if taskWithAsteriskIsCompleted {
+			expected := []string{
+				"and",     // 4
+				"dog",     // 3
+				"-----",   // 1
+				"animals", // 1
+				"bob-one", // 1
+				"boy",     // 1
+				"boys",    // 1
+				"girl",    // 1
+				"girls",   // 1
+				"not",     // 1
+			}
+			require.Equal(t, expected, Top10(text3))
 		}
 	})
 }
