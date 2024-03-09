@@ -18,30 +18,36 @@ func Top10(str string) []string {
 	// ----- Создаём мапу по словам
 	mapwords := make(map[string]int)
 	// ----- Создаём слайс по самым популярным словам
-	strout := make([]string, 10)
+	strout := make([]string, 0, 10)
 	// ----- Выделяем из текста слова
 	f := func(c rune) bool {
 		return unicode.IsSpace(c) || c == '.' || c == ',' || c == '!' || c == '\'' || c == '"'
 	}
 	words := strings.FieldsFunc(refStringNew, f)
 	// ----- Cчитаем количество слов
-	for _, word := range words { //nolint
-		if _, ok := mapwords[word]; ok {
-			mapwords[word]++
-		} else {
-			mapwords[word] = 1
-		}
+	for _, word := range words {
+		mapwords[word]++
 	}
+	// ----- Запоминаем длину мапы
+	lenmapwords := len(mapwords)
 	// ----- Считаем слова и количество повторений
-	for i := 0; i < 10; i++ {
+	for i := 0; (i < 10) && (i < lenmapwords); i++ {
 		maxvol := 0
 		for mp, vol := range mapwords {
 			if maxvol < vol {
 				maxvol = vol
-				strout[i] = mp
+				if len(strout) <= i {
+					strout = append(strout, mp)
+				} else {
+					strout[i] = mp
+				}
 			}
 			if (maxvol == vol) && (mp < strout[i]) {
-				strout[i] = mp
+				if len(strout) <= i {
+					strout = append(strout, mp)
+				} else {
+					strout[i] = mp
+				}
 			}
 		}
 		delete(mapwords, strout[i])

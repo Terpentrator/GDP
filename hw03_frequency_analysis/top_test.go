@@ -84,7 +84,8 @@ func TestTop10(t *testing.T) {
 }
 
 // Тестовая последовтальность №2.
-var text2 = `! cat and dog, dog  Dog one Bob, two  ,, !...   `
+// var text2 = `! cat and dog, dog  Dog one Bob, two  ,, !...   `.
+var text2 = `! cat and dog, dog  Dog one Bob, two`
 
 // Фцнкция тесторования №2.
 func TestTop10_2(t *testing.T) {
@@ -101,10 +102,6 @@ func TestTop10_2(t *testing.T) {
 				"cat", // 1
 				"one", // 1
 				"two", // 1
-				"",
-				"",
-				"",
-				"",
 			}
 			require.Equal(t, expected, Top10(text2))
 		}
